@@ -16,17 +16,17 @@ class AuthController:
     def _hash_password(self, password: str) -> str:
         return hashlib.sha256(password.encode()).hexdigest()
 
-    def registrar_user(self, username, password):
+    def registrar_user(self, email, password):
         with Session(engine) as session:
             # 1. Verificar si ya existe
-            statement = select(User).where(User.username == username)
+            statement = select(User).where(User.email == email)
             results = session.exec(statement)
             if results.first():
                 return False, "El User ya existe"
             
             # 2. Crear nuevo User
             User = User(
-                username=username, 
+                email=email, 
                 password=self._hash_password(password)
             )
             
@@ -34,14 +34,14 @@ class AuthController:
             session.commit()
             return True, "User creado exitosamente"
 
-    def verificar_user(self, username, password):
+    def verificar_user(self, email, password):
         with Session(engine) as session:
             # Buscar User por nombre
-            statement = select(User).where(User.username == username)
+            statement = select(User).where(User.email == email)
             User = session.exec(statement).first()
             
             # Verificar si existe y si la contraseña coincide
             if User and User.password == self._hash_password(password):
-                return True, f"Bienvenido, {User.username}"
+                return True, f"Bienvenido, {User.email}"
             else:
-                return False, "User o contraseña incorrectos"
+                return False, "Email o contraseña incorrectos"

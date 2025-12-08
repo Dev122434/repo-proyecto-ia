@@ -5,7 +5,7 @@ class LoginScreen:
         self.page = page
 
     def login(self):
-        self.page.title = "Login Moderno"
+        self.page.title = "Chat - Login"
         self.page.vertical_alignment = ft.MainAxisAlignment.CENTER
         self.page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
         self.page.theme_mode = ft.ThemeMode.LIGHT
@@ -20,7 +20,7 @@ class LoginScreen:
             txt_pass.error_text = None
         
             if not txt_user.value:
-                txt_user.error_text = "Por favor ingrese su usuario"
+                txt_user.error_text = "Por favor ingrese su email"
                 self.page.update()
             elif not txt_pass.value:
                 txt_pass.error_text = "Por favor ingrese su contraseña"
@@ -34,10 +34,10 @@ class LoginScreen:
             self.page.snack_bar.open = True
             self.page.update()
     
-    # Campo de Usuario
+    # Campo de Email
         txt_user = ft.TextField(    
-            label="Nombre de usuario",
-            prefix_icon=ft.Icons.PERSON,
+            label="Email",
+            prefix_icon=ft.Icons.EMAIL,
             border_radius=10,
             keyboard_type=ft.KeyboardType.EMAIL,
         )
